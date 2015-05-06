@@ -9,6 +9,7 @@
                 "bower_components/angularjs/angular.js",
                 "bower_components/jquery/dist/jquery.js",
                 "js/matrix.js",
+                "js/services/chrome-message-service.js",
                 "js/matrix/commands-service.js",
                 "js/matrix/event-handler-service.js",
                 "js/matrix/event-stream-service.js",

@@ -1,1 +1,1 @@
-var headjackApp = angular.module('headjackApp', ['ngResource', 'matrixService']);
+var headjackApp = angular.module('headjackApp', ['ngResource', 'matrixService', 'chmsg']);

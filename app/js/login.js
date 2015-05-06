@@ -1,4 +1,4 @@
-headjackApp.controller('LoginCtrl', ['$scope', '$http', 'matrixService', function ($scope, $http, matrixService) {
+headjackApp.controller('LoginCtrl', ['$scope', 'chmsg', function ($scope, chmsg) {
 
     $scope.loginform = {
         disabled: false,
@@ -8,11 +8,7 @@ headjackApp.controller('LoginCtrl', ['$scope', '$http', 'matrixService', functio
     $scope.login = function() {
         $scope.loginform.disabled = true;
 
-
-        chrome.runtime.sendMessage({
-            type: 'login',
-            loginform: $scope.loginform
-        });
+        chmsg.send('login', $scope.loginform );
     };
 
 }]);

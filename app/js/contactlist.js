@@ -1,18 +1,14 @@
-headjackApp.controller('ContactlistCtrl', function ($scope, $http, matrixService) {
+headjackApp.controller('ContactlistCtrl', function ($scope, chmsg) {
 
-    chrome.runtime.onMessage.addListener(function(message) {
-        if(message.type == 'rooms') {
-            $scope.rooms = message.rooms;
-            $scope.$apply();
-        }
 
+    chmsg.on('rooms', function (message) {
+        $scope.rooms = message.rooms;
+        $scope.$apply();
     });
 
     /**
      * Window loaded, request an initial sync
      */
-    chrome.runtime.sendMessage({
-        'type': 'initsync'
-    });
+    chmsg.send('initsync');
 
 });
