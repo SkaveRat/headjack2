@@ -1,0 +1,1 @@
+var headjackApp = angular.module('headjackApp', ['ngResource', 'matrixService']);

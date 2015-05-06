@@ -1,0 +1,34 @@
+{
+    "name": "Matrix Headjack",
+    "description": "Matrix.org desktop app",
+    "version": "0.1",
+    "manifest_version": 2,
+    "app": {
+        "background": {
+            "scripts": [
+                "bower_components/angularjs/angular.js",
+                "bower_components/jquery/dist/jquery.js",
+                "js/matrix.js",
+                "js/matrix/commands-service.js",
+                "js/matrix/event-handler-service.js",
+                "js/matrix/event-stream-service.js",
+                "js/matrix/event-reaper-service.js",
+                "js/matrix/matrix-filter.js",
+                "js/matrix/matrix-phone-service.js",
+                "js/matrix/matrix-service.js",
+                "js/matrix/model-service.js",
+                "js/matrix/notification-service.js",
+                "js/matrix/presence-service.js",
+                "js/matrix/recents-service.js",
+                "js/matrix/typing-service.js",
+                "js/matrix/webrtc-service.js",
+                "js/background.js"
+            ]
+        }
+    },
+    "icons": {"16": "logo-16.png"},
+    "permissions": [
+        "storage",
+        "<all_urls>"
+    ]
+}
