@@ -14,6 +14,6 @@ You need:
 * run `npm install`
 * run `npm prepare`
 * Open Chrome/ium
-* go to `[chrome://extensions](chrome://extensions)`
+* Open the URL `chrome://extensions`
 * Check `Developer mode` in the top right corner
 * Click `Load packaged app` and select the `app` directory of this repository
