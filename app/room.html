@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html ng-app="headjackApp" ng-csp="">
+<html ng-app="headjackApp" ng-csp="" ng-controller="RoomCtrl">
 <head>
     <meta charset="utf-8">
-    <title>Contactlist</title>
+    <title>{{ room.name }}</title>
 
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="bower_components/bootstrap-material-design/dist/css/material-fullpalette.css" rel="stylesheet">
@@ -15,22 +15,16 @@
     <script src="js/app.js"></script>
     <script src="js/matrix/matrix-service.js"></script>
     <script src="js/services/chrome-message-service.js"></script>
-    <script src="js/contactlist.js"></script>
+    <script src="js/room.js"></script>
 </head>
-<body ng-controller="ContactlistCtrl">
+<body>
 
 <div class="container">
+    <h3 class="text-center">{{ room.name }}</h3>
 
-    <h3 class="text-center">Rooms</h3>
-
-    <div class="row">
-        <nav class="col-xs-12 menu">
-            <ul class="list-group">
-                <li ng-repeat="room in rooms" ng-click="openRoom(room.room_id)" class="list-group-item">{{ room.name }}</li>
-            </ul>
-        </nav>
-    </div>
-
+    <ul>
+        <li ng-repeat="msg in room.aevents">{{ msg.e.content.body }}</li>
+    </ul>
 
 </div>
 </body>

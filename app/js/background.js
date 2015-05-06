@@ -78,6 +78,32 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
                 }
             });
 
+
+            chmsg.on('open_room', function(message) {
+                chrome.app.window.create('room.html', {
+                        id: message.room_id,
+                        innerBounds: {
+                            width: 350,
+                            height: 350
+                        },
+                        left: 0,
+                        top: 0
+                    },
+                    function (createdWindow) {
+                        createdWindow.contentWindow.room_id = message.room_id;
+                    }
+                );
+            });
+
+            chmsg.on('room_initsync', function (message) {
+
+                var room = modelService.getRoom(message.room_id);
+
+                chmsg.send('room_initdata', {
+                    room: room
+                }); //TODO use respond method of messaging
+            });
+
         }]);
 
 });
