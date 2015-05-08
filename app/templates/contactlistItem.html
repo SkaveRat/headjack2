@@ -1,6 +1,8 @@
 <div ng-click="openRoom(room.room_id)" class="list-group-item">
     <div class="row-action-primary">
-        <i class="mdi-action-face-unlock" ng-if="(room.now.members|keylength) == 2"></i>
+        <mx-avatar user-id="room.now.members[0].user_id" ng-if="(room.now.members|keylength) == 2"></mx-avatar>
+
+        <!--<i class="mdi-action-face-unlock" ng-if="(room.now.members|keylength) == 2"></i>-->
         <i class="mdi-social-group" ng-if="(room.now.members|keylength) != 2"></i>
     </div>
     <div class="row-content">
