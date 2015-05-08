@@ -19,19 +19,35 @@
 </head>
 <body ng-controller="ContactlistCtrl">
 
-<div class="container">
 
-    <h3 class="text-center">Rooms</h3>
-
-    <div class="row">
-        <nav class="col-xs-12 menu">
-            <ul class="list-group">
-                <li ng-repeat="room in rooms" ng-click="openRoom(room.room_id)" class="list-group-item">{{ room.name }}</li>
-            </ul>
-        </nav>
+<div class="navbar navbar-black shadow-z-1">
+    <div class="navbar-header">
+        <button class="navbar-toggle pull-left"><i class="mdi-navigation-menu"></i></button>
+        <span class="navbar-brand">Matrix</span>
     </div>
+</div>
 
 
+<div class="container">
+    <div class="row">
+        <div class="list-group">
+            <div ng-repeat="room in rooms" ng-click="openRoom(room.room_id)">
+                <div class="list-group-item">
+                    <div class="row-action-primary">
+                        <i class="mdi-action-face-unlock" ng-if="(room.now.members|keylength) == 2" ></i>
+                        <i class="mdi-social-group" ng-if="(room.now.members|keylength) != 2" ></i>
+                    </div>
+                    <div class="row-content">
+                        <div class="least-content">{{ room.now.members | keylength }}</div>
+                        <h4 class="list-group-item-heading">{{ room.name }}</h4>
+
+                        <p class="list-group-item-text">{{ room.now.state_events['m.room.topic'].content.topic }}</p>
+                    </div>
+                </div>
+                <div class="list-group-separator"></div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
