@@ -8,12 +8,17 @@ headjackApp.filter('keylength', function(){
     }
 });
 
-headjackApp.directive('mxContactlistEntry', function () {
+headjackApp.directive('mxContactlistEntry', ['chmsg', function (chmsg) {
     return {
         templateUrl: "templates/contactlistItem.html",
         scope: {
             room: '='
         },
-        restrict: 'E'
+        restrict: 'E',
+        link: function(scope, element, attr) {
+            scope.openRoom = function(room_id) {
+                chmsg.send('open_room', {room_id: room_id});
+            };
+        }
     }
-});
+}]);
