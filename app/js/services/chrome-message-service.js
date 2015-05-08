@@ -4,21 +4,22 @@ angular.module('chmsg', [])
     .factory('chmsg', [
         function () {
 
-            function send(type, message) {
+            function send(type, message, responseCallback) {
                 chrome.runtime.sendMessage(
                     {
                         type: type,
                         message: message
-                    }
+                    },
+                    responseCallback
                 );
             }
 
-            function on(type, callback) {
-                chrome.runtime.onMessage.addListener(function (message) {
+            function on(type, callback, sendResponse) {
+                chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                     console.debug("Chrome message");
                     console.debug(message);
                     if (message.type == type) {
-                        callback(message.message)
+                        callback(message.message, sendResponse)
                     }
                 });
             }
