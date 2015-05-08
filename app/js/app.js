@@ -7,3 +7,13 @@ headjackApp.filter('keylength', function(){
         return Object.keys(input).length;
     }
 });
+
+headjackApp.directive('mxContactlistEntry', function () {
+    return {
+        templateUrl: "templates/contactlistItem.html",
+        scope: {
+            room: '='
+        },
+        restrict: 'E'
+    }
+});

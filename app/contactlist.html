@@ -31,20 +31,7 @@
 <div class="container">
     <div class="row">
         <div class="list-group">
-            <div ng-repeat="room in rooms" ng-click="openRoom(room.room_id)">
-                <div class="list-group-item">
-                    <div class="row-action-primary">
-                        <i class="mdi-action-face-unlock" ng-if="(room.now.members|keylength) == 2" ></i>
-                        <i class="mdi-social-group" ng-if="(room.now.members|keylength) != 2" ></i>
-                    </div>
-                    <div class="row-content">
-                        <div class="least-content">{{ room.now.members | keylength }}</div>
-                        <h4 class="list-group-item-heading">{{ room.name }}</h4>
-
-                        <p class="list-group-item-text">{{ room.now.state_events['m.room.topic'].content.topic }}</p>
-                    </div>
-                </div>
-                <div class="list-group-separator"></div>
+                <mx-contactlist-entry room="room" ng-repeat="room in rooms" ></mx-contactlist-entry>
             </div>
         </div>
     </div>
