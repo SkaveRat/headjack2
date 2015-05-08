@@ -61,21 +61,18 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
                         left: 0,
                         top: 0
                     });
+
+                    eventStreamService.resume();
                 }
             });
 
             chmsg.on('initsync', function (message) {
-                eventStreamService.resume()
-                    .then(loadRoomsInContactlist);
+                console.log("Fetching room data");
+                var roomData = modelService.getRooms();
 
-                function loadRoomsInContactlist() {
-                    console.log("Fetching room data");
-                    var roomData = modelService.getRooms();
-
-                    chmsg.send('rooms', {
-                        rooms: roomData
-                    });
-                }
+                chmsg.send('rooms', {
+                    rooms: roomData
+                });
             });
 
 
