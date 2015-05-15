@@ -66,7 +66,7 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
             });
 
             chmsg.on('initsync', function (message) {
-                console.log("Fetching room data");
+                console.log("Fetching rooms");
                 var roomData = modelService.getRooms();
                 chmsg.send('rooms', {
                     rooms: roomData
@@ -90,13 +90,11 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
                 );
             });
 
-            chmsg.on('room_initsync', function (message) {
+            chmsg.on('room_initsync', function (message, answer_callback) {
 
-                var room = modelService.getRoom(message.room_id);
+                var roomdata = modelService.getRoom(message.room_id);
 
-                chmsg.send('room_initdata', {
-                    room: room
-                }); //TODO use respond method of messaging
+                answer_callback(roomdata);
             });
 
 
