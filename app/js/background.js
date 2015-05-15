@@ -69,7 +69,6 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
             chmsg.on('initsync', function (message) {
                 console.log("Fetching room data");
                 var roomData = modelService.getRooms();
-
                 chmsg.send('rooms', {
                     rooms: roomData
                 });
