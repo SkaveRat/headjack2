@@ -10,8 +10,14 @@ headjackApp.controller('RoomCtrl', function ($scope, chmsg, $window) {
             $scope.room = message.room;
             $scope.$apply();
         }
-    })
+    });
 
 
+    $scope.sendMsg = function () {
+        chmsg.send('send_msg', {
+            msg: $scope.msg,
+            room_id: room_id
+        })
+    }
 
 });

@@ -16,8 +16,8 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
         angular.bootstrap(document, ['headjackApp']);
     });
 
-    headjackApp.run(['$rootScope', 'matrixService', 'eventStreamService', 'modelService', 'chmsg',
-        function ($rootScope, matrixService, eventStreamService, modelService, chmsg) {
+    headjackApp.run(['$rootScope', 'matrixService', 'eventStreamService', 'modelService', 'eventHandlerService', 'chmsg',
+        function ($rootScope, matrixService, eventStreamService, modelService, eventHandlerService, chmsg) {
 
             chrome.app.window.create('login.html', {
                 id: "Login",
@@ -41,7 +41,6 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
 
 
                 function processLogin(response) {
-
                     matrixService.setConfig({
                         homeserver: 'https://' + response.data.home_server, // TODO check if we get an https
                         identityServer: 'https://' + response.data.home_server,
@@ -100,6 +99,10 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
                 }); //TODO use respond method of messaging
             });
 
+
+            chmsg.on('send_msg', function (messagedata) {
+                eventHandlerService.sendMessage(messagedata.room_id, messagedata.msg);
+            })
         }]);
 
 });
