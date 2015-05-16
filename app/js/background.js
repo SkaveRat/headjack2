@@ -24,6 +24,7 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
         chmsg.on('account.getaccounts', function () {
             accountmanagerService.getAccounts()
                 .then(function (accounts) {
+                    accounts = accounts || [];
                     chmsg.send('account.list', accounts);
                 });
         });
