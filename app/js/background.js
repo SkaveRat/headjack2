@@ -1,106 +1,51 @@
 chrome.app.runtime.onLaunched.addListener(function (launchData) {
 
     var headjackApp = angular.module('headjackApp', [
-        'matrixService',
-        'eventStreamService',
-        'eventHandlerService',
-        'mPresence',
-        'notificationService',
-        'modelService',
-        'commandsService',
-        'matrixFilter',
-        'chmsg',
+        'mxService',
+        'accountmanagerService',
+        'chmsg'
     ]);
 
     angular.element(document).ready(function () {
         angular.bootstrap(document, ['headjackApp']);
     });
 
-    headjackApp.run(['$rootScope', 'matrixService', 'eventStreamService', 'modelService', 'eventHandlerService', 'chmsg',
-        function ($rootScope, matrixService, eventStreamService, modelService, eventHandlerService, chmsg) {
+    headjackApp.run(['mxService', 'accountmanagerService', 'chmsg', function (mxService, accountmanagerService, chmsg) {
+        chrome.app.window.create('contactlist.html', {
+            id: "Contactlist",
+            innerBounds: {
+                width: 350,
+                height: 600,
+                left: 0,
+                top: 0
+            }
+        });
 
-            chrome.app.window.create('login.html', {
-                id: "Login",
-                innerBounds: {
-                    width: 300,
-                    height: 300,
-                    left: 0,
-                    top: 0
-                }
-            });
-
-            chmsg.on('login', function (message) {
-                matrixService.setConfig({
-                    homeserver: 'https://matrix.org/',
-                    identityServer: 'https://matrix.org/'
+        chmsg.on('account.getaccounts', function () {
+            accountmanagerService.getAccounts()
+                .then(function (accounts) {
+                    chmsg.send('account.list', accounts);
                 });
-                matrixService.saveConfig();
-                matrixService
-                    .login(message.user, message.password)
-                    .then(processLogin); //TODO add error handler
+        });
 
-
-                function processLogin(response) {
-                    matrixService.setConfig({
-                        homeserver: 'https://' + response.data.home_server, // TODO check if we get an https
-                        identityServer: 'https://' + response.data.home_server,
-                        user_id: response.data.user_id,
-                        access_token: response.data.access_token
-                    });
-                    matrixService.saveConfig();
-
-                    chrome.app.window.get("Login").close();
-
-                    chrome.app.window.create('contactlist.html', {
-                        id: "Contactlist",
-                        innerBounds: {
-                            width: 350,
-                            height: 500
-                        },
-                        left: 0,
-                        top: 0
-                    });
-
-                    eventStreamService.resume();
-                }
-            });
-
-            chmsg.on('initsync', function (message) {
-                console.log("Fetching rooms");
-                var roomData = modelService.getRooms();
-                chmsg.send('rooms', {
-                    rooms: roomData
+        chmsg.on('rooms.get', function (user_id) {
+            accountmanagerService.getAccount(user_id)
+                .then(mxService.getRooms)
+                .then(function (rooms) {
+                    chmsg.send('rooms.list', rooms);
                 });
-            });
+        });
 
+        chmsg.on('account.login', function (logindata, callback) {
+            mxService.login(logindata)
+                .then(function (accountdata) {
+                    accountmanagerService.addAccount(accountdata)
+                        .then(function (user_id) {
+                           chmsg.send('contacts.refresh');
+                        });
+                });
+                //TODO fail state
+        });
 
-            chmsg.on('open_room', function(message) {
-                chrome.app.window.create('room.html', {
-                        id: message.room_id,
-                        innerBounds: {
-                            width: 350,
-                            height: 350
-                        },
-                        left: 0,
-                        top: 0
-                    },
-                    function (createdWindow) {
-                        createdWindow.contentWindow.room_id = message.room_id;
-                    }
-                );
-            });
-
-            chmsg.on('room_initsync', function (message, answer_callback) {
-
-                var roomdata = modelService.getRoom(message.room_id);
-
-                answer_callback(roomdata);
-            });
-
-
-            chmsg.on('send_msg', function (messagedata) {
-                eventHandlerService.sendMessage(messagedata.room_id, messagedata.msg);
-            })
-        }]);
-
+    }]);
 });

@@ -5,16 +5,18 @@
     <title>Contactlist</title>
 
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/design.css" rel="stylesheet">
     <link href="bower_components/bootstrap-material-design/dist/css/material-fullpalette.css" rel="stylesheet">
+    <link href="bower_components/angularjs/angular-csp.css" rel="stylesheet">
 
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angularjs/angular.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="js/matrix.js"></script>
+    <script src="node_modules/matrix-js-sdk/lib/matrix.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/matrix/matrix-service.js"></script>
     <script src="js/services/chrome-message-service.js"></script>
+    <script src="js/services/mx-service.js"></script>
     <script src="js/contactlist.js"></script>
 </head>
 <body ng-controller="ContactlistCtrl">
@@ -27,6 +29,59 @@
     </div>
 </div>
 
+<div class="container" ng-show="loading">
+    <div class="col-xs-12">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+</div>
+
+<div class="container text-center" ng-show="accountcheck.display">
+    <div class="row">
+        <div class="col-xs-12"><h2>No accounts</h2></div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12"><button class="btn btn-success" data-toggle="modal" data-target="#add-account">Add account</button></div>
+    </div>
+
+    <div id="add-account" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Add account</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" ng-submit="checkLogin()">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="user" class="col-lg-2 control-label">Username</label>
+                                <div class="col-lg-10">
+                                    <input ng-model="loginform.user" type="text" class="form-control" id="user" placeholder="Username">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-lg-2 control-label">Password</label>
+                                <div class="col-lg-10">
+                                    <input ng-model="loginform.password" type="password" class="form-control" id="password" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-sm" ng-disabled="loginform.disabled">Login</button>
+                            </div>
+                            <div ng-show="loginform.error" class="form-group alert alert-dismissable alert-danger">
+                                <p>Login error: <span>{{ loginform.error }}</span></p>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 <div class="container">
     <div class="row">

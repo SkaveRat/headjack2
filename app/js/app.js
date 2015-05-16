@@ -1,4 +1,4 @@
-var headjackApp = angular.module('headjackApp', ['ngResource', 'matrixService', 'chmsg']);
+var headjackApp = angular.module('headjackApp', ['ngResource', 'chmsg']);
 headjackApp.filter('keylength', function(){
     return function(input){
         if(!angular.isObject(input)){
