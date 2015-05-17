@@ -1,4 +1,10 @@
-var headjackApp = angular.module('headjackApp', ['ngResource', 'chmsg']);
+var headjackApp = angular.module('headjackApp', ['ngResource', 'chmsg', 'ngMaterial', 'ngAnimate', 'ngAria']);
+headjackApp.config(['$mdThemingProvider', function ($mdThemingProvider) {
+    $mdThemingProvider.theme('default')
+        .primaryPalette('blue-grey')
+        .accentPalette('lime')
+}]);
+
 headjackApp.filter('keylength', function(){
     return function(input){
         if(!angular.isObject(input)){
