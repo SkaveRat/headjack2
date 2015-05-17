@@ -48,6 +48,7 @@ var init = function(exports){
     };
 
     var CLIENT_PREFIX = "/_matrix/client/api/v1";
+    var CLIENT_V2_PREFIX = "/_matrix/client/v2_alpha";
     var HEADERS = {
         "User-Agent": "matrix-js"
     };
@@ -96,6 +97,21 @@ var init = function(exports){
             });
             return this._doAuthedRequest(
                 callback, "PUT", path, undefined, content
+            );
+        },
+
+        getStateEvent: function(roomId, eventType, stateKey, callback) {
+            var pathParams = {
+                $roomId: roomId,
+                $eventType: eventType,
+                $stateKey: stateKey
+            };
+            var path = encodeUri("/rooms/$roomId/state/$eventType", pathParams);
+            if (stateKey !== undefined) {
+                path = encodeUri(path + "/$stateKey", pathParams);
+            }
+            return this._doAuthedRequest(
+                callback, "GET", path
             );
         },
 
@@ -293,6 +309,24 @@ var init = function(exports){
         setAvatarUrl: function(url, callback) {
             return this.setProfileInfo(
                 "avatar_url", { avatar_url: url }, callback
+            );
+        },
+
+        getThreePids: function(creds, bind, callback) {
+            var path = "/account/3pid";
+            return this._doAuthedV2Request(
+                callback, "GET", path, undefined, undefined
+            );
+        },
+
+        addThreePid: function(creds, bind, callback) {
+            var path = "/account/3pid";
+            var data = {
+                'threePidCreds': creds,
+                'bind': bind
+            };
+            return this._doAuthedV2Request(
+                callback, "POST", path, undefined, data
             );
         },
 
@@ -531,29 +565,44 @@ var init = function(exports){
             return this._doRequest(callback, method, path, params, data);
         },
 
+        _doAuthedV2Request: function(callback, method, path, params, data) {
+            if (!params) { params = {}; }
+            params.access_token = this.credentials.accessToken;
+            return this._doV2Request(callback, method, path, params, data);
+        },
+
         _doRequest: function(callback, method, path, params, data) {
             var fullUri = this.credentials.baseUrl + CLIENT_PREFIX + path;
             if (!params) { params = {}; }
             return this._request(callback, method, fullUri, params, data);  
         },
 
+        _doV2Request: function(callback, method, path, params, data) {
+            var fullUri = this.credentials.baseUrl + CLIENT_V2_PREFIX + path;
+            if (!params) { params = {}; }
+            return this._request(callback, method, fullUri, params, data);
+        },
+
         _request: function(callback, method, uri, params, data) {
             if (callback !== undefined && !isFunction(callback)) {
                 throw Error("Expected callback to be a function");
             }
-
-            return request(
-            {
-                uri: uri,
-                method: method,
-                withCredentials: false,
-                qs: params,
-                body: data,
-                json: true,
-                headers: HEADERS
-            },
-            requestCallback(callback)
+            var request2 = request(
+                {
+                    uri: uri,
+                    url: uri + '?' + $.param(params),
+                    method: method,
+                    withCredentials: false,
+                    qs: params,
+                    body: data,
+                    data: JSON.stringify(data),
+                    json: true,
+                    //headers: HEADERS,
+                    _matrix_credentials: this.credentials
+                },
+                requestCallback(callback)
             );
+            return Q(request2);
         }
     };
 
