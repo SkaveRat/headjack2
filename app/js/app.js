@@ -25,7 +25,7 @@ headjackApp.filter('mx_room_alias', ['mx_room_membersFilter', function (mx_room_
 }]);
 
 //TODO use displaynames
-//TODO number not correct. Name changes?
+//TODO number not correct. Name changes? Leavings?
 headjackApp.filter('mx_room_members', function () {
     return function (room) {
         var members = [];
@@ -46,8 +46,8 @@ headjackApp.directive('mxContactlistEntry', ['chmsg', function (chmsg) {
         },
         restrict: 'E',
         link: function(scope, element, attr) {
-            scope.openRoom = function(room_id) {
-                chmsg.send('open_room', {room_id: room_id});
+            scope.openRoom = function(room_id, user_id) {
+                chmsg.send('room.open', {room_id: room_id, user_id: user_id});
             };
         }
     }

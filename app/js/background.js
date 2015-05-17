@@ -48,5 +48,32 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
                 //TODO fail state
         });
 
+        chmsg.on('room.open', function (msg) {
+            chrome.app.window.create('room.html', {
+                id: msg.room_id,
+                innerBounds: {
+                    width: 800,
+                    height: 600,
+                    left: 0,
+                    top: 0
+                }
+            },
+            function(createdWindow) { //inject data into new window
+                createdWindow.contentWindow.room_id = msg.room_id;
+                createdWindow.contentWindow.user_id = msg.user_id;
+            })
+        });
+
+        chmsg.on('room.initsync', function (msg) {
+            var room_id = msg.room_id;
+            var user_id = msg.user_id;
+            accountmanagerService.getAccount(user_id)
+                .then(function (credentials) {
+                    return mxService.getRoomInitSync(credentials, room_id)
+                })
+                .then(function (roomData) {
+                    chmsg.send('room.data', roomData);
+                });
+        })
     }]);
 });
