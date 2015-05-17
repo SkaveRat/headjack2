@@ -8,6 +8,36 @@ headjackApp.filter('keylength', function(){
     }
 });
 
+headjackApp.filter('mx_room_alias', ['mx_room_membersFilter', function (mx_room_membersFilter) {
+    return function(room) {
+        var alias = '';
+        angular.forEach(room.state, function (state) {
+            if(state.type=='m.room.aliases') {
+                alias = state.content.aliases[0];
+            }
+        });
+
+        var members = mx_room_membersFilter(room);
+        if(members.length <= 2)
+            alias = members.join(' ,'); //TODO use displayname and better concat
+        return alias;
+    }
+}]);
+
+//TODO use displaynames
+//TODO number not correct. Name changes?
+headjackApp.filter('mx_room_members', function () {
+    return function (room) {
+        var members = [];
+        angular.forEach(room.state, function (state) {
+            if(state.type=='m.room.member') {
+                members.push(state.user_id);
+            }
+        });
+        return members;
+    }
+});
+
 headjackApp.directive('mxContactlistEntry', ['chmsg', function (chmsg) {
     return {
         templateUrl: "templates/contactlistItem.html",

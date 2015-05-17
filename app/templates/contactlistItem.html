@@ -3,8 +3,8 @@
         <i class="mdi-social-group"></i>
     </div>
     <div class="row-content">
-        <div class="least-content">42</div>
-        <h4 class="list-group-item-heading">{{ room.room_id }}</h4>
+        <div class="least-content">{{ (room | mx_room_members).length }}</div>
+        <h4 class="list-group-item-heading">{{ room | mx_room_alias }}</h4>
 
         <!--<p class="list-group-item-text">{{ room.now.state_events['m.room.topic'].content.topic }}</p>-->
     </div>
