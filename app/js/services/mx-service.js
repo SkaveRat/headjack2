@@ -29,7 +29,7 @@ angular.module('mxService', [])
             function getRoomInitSync(credentials, room_id) {
                 var mxClient = clientFromCredentials(credentials);
 
-                return mxClient.roomInitialSync(room_id, 10)
+                return mxClient.roomInitialSync(room_id, 23)
                     .then(function (data) {
                         return data;
                     })

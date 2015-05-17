@@ -11,6 +11,8 @@ headjackApp.filter('keylength', function(){
 headjackApp.filter('mx_room_alias', ['mx_room_membersFilter', function (mx_room_membersFilter) {
     return function(room) {
         var alias = '';
+        if(!room) { return ''; }
+
         angular.forEach(room.state, function (state) {
             if(state.type=='m.room.aliases') {
                 alias = state.content.aliases[0];
@@ -35,6 +37,19 @@ headjackApp.filter('mx_room_members', function () {
             }
         });
         return members;
+    }
+});
+
+headjackApp.filter('mx_room_messages', function () {
+    return function (room) {
+        if(!room) { return []; }
+        var messages = [];
+        angular.forEach(room.messages.chunk, function (message) {
+            if(message.type=='m.room.message') {
+                messages.push(message);
+            }
+        });
+        return messages;
     }
 });
 
