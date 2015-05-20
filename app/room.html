@@ -4,44 +4,57 @@
     <meta charset="utf-8">
     <title>{{ room | mx_room_alias }}</title>
 
-    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="bower_components/bootstrap-material-design/dist/css/material-fullpalette.css" rel="stylesheet">
+    <link href="css/design.css" rel="stylesheet">
+    <link href="bower_components/angular-material/angular-material.min.css" rel="stylesheet">
+    <link href="bower_components/angularjs/angular-csp.css" rel="stylesheet">
 
     <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angularjs/angular.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="js/matrix.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/angular-material-icons/angular-material-icons.js"></script>
+    <script src="node_modules/matrix-js-sdk/lib/matrix.js"></script>
     <script src="js/app.js"></script>
     <script src="js/services/chrome-message-service.js"></script>
+    <script src="js/services/mx-service.js"></script>
     <script src="js/room.js"></script>
 </head>
 <body>
 
-<ul class="nav nav-tabs shadow-z-1">
-    <li><a href="#">{{ room | mx_room_alias }}</a></li>
-    <!--<li><a href="#">#matrix-dev</a></li>-->
-</ul>
-
-<div class="container">
-    <div class="row">
-        <div class="col-xs-12">
-            <ul class="list-group">
-                <li class="list-group-item" ng-repeat="msg in (room | mx_room_messages)">{{ msg.content.body }}</li>
+<div layout="column" layout-fill>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span>{{ room | mx_room_alias }}</span>
+        </div>
+    </md-toolbar>
+    <div layout="row" flex>
+        <div flex="10">
+            <ul>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
             </ul>
         </div>
-    </div>
+        <div flex layout="column">
+            <md-content style="height:1px" flex>
+                <md-list flex>
+                    <md-list-item room="room" ng-repeat-start="msg in (room | mx_room_messages)">{{ msg.content.body }}</md-list-item>
+                    <md-divider ng-repeat-end></md-divider>
+                </md-list>
+            </md-content>
 
-    <div class="form-group" style="position: absolute; bottom: 0;left: 0">
-        <label for="msg" class="control-label sr-only">Message</label>
-        <div class="col-xs-9">
-            <input type="text" class="form-control" id="msg" ng-model="msg">
-        </div>
-        <div class="col-xs-2">
-            <button class="btn btn-sm btn-fab btn-fab-mini btn-raised btn-primary btn-sm" ng-click="sendMsg()"><i class="mdi-content-send"></i></button>
+            <md-input-container layout="row">
+                <form ng-submit="sendMessage()">
+                    <label>Message</label>
+                    <input type="text" ng-model="msg" flex />
+                </form>
+            </md-input-container>
         </div>
     </div>
 </div>
-
 </body>
 </html>
