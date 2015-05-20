@@ -22,7 +22,7 @@ headjackApp.controller('ContactlistCtrl', function ($scope, chmsg) {
         $scope.$apply();
         console.log("loaded accounts. fetching contacts");
         if(accounts.length > 0) { //TODO genericify
-            chmsg.send('rooms.get', accounts[0].user_id); //TODO use initialSync instead
+            chmsg.send('events.initsync', accounts[0].user_id); //TODO use initialSync instead
         }
     });
 

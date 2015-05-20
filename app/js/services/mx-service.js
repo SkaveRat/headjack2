@@ -15,14 +15,14 @@ angular.module('mxService', [])
                 return mxClient.login('m.login.password', logindata);
             }
 
-            function getRooms(credentials) { //TODO move this into initialsync call
+            function initialSync(credentials) {
                 var mxClient = clientFromCredentials(credentials);
                 return mxClient.initialSync(1)
-                    .then(function (data) {
-                        angular.forEach(data.rooms, function (room) { //TODO find a better solution to later stateless identify own account
+                    .then(function (syncData) {
+                        angular.forEach(syncData.rooms, function (room) { //TODO find a better solution to later stateless identify own account
                             room.me = credentials.user_id;
                         });
-                        return data.rooms;
+                        return syncData;
                     });
             }
 
@@ -48,9 +48,15 @@ angular.module('mxService', [])
                 });
             }
 
+            function events(credentials, from) {
+                var mxClient = clientFromCredentials(credentials);
+                return mxClient.eventStream(from);
+            }
+
             return {
                 login: login,
-                getRooms: getRooms,
+                events: events,
+                initialSync: initialSync,
                 getRoomInitSync: getRoomInitSync
             }
         }

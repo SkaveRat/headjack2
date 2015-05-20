@@ -3,6 +3,7 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
     var headjackApp = angular.module('headjackApp', [
         'mxService',
         'accountmanagerService',
+        'eventhandlerService',
         'chmsg'
     ]);
 
@@ -10,7 +11,9 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
         angular.bootstrap(document, ['headjackApp']);
     });
 
-    headjackApp.run(['mxService', 'accountmanagerService', 'chmsg', function (mxService, accountmanagerService, chmsg) {
+    headjackApp.run(
+        ['mxService', 'accountmanagerService', 'eventhandlerService', 'chmsg',
+        function (mxService, accountmanagerService, eventhandlerService, chmsg) {
         chrome.app.window.create('contactlist.html', {
             id: "Contactlist",
             innerBounds: {
@@ -29,11 +32,12 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
                 });
         });
 
-        chmsg.on('rooms.get', function (user_id) {
+        chmsg.on('events.initsync', function (user_id) {
             accountmanagerService.getAccount(user_id)
-                .then(mxService.getRooms)
-                .then(function (rooms) {
-                    chmsg.send('rooms.list', rooms);
+                .then(mxService.initialSync)
+                .then(function (syncData) {
+                    chmsg.send('rooms.list', syncData.rooms);
+                    chmsg.send('events.start', {user_id: user_id, from: syncData.end});
                 });
         });
 
@@ -74,6 +78,27 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
                 .then(function (roomData) {
                     chmsg.send('room.data', roomData);
                 });
-        })
+        });
+
+
+        chmsg.on('events.start', function (msg) {
+            accountmanagerService.getAccount(msg.user_id)
+                .then(function (credentials) {
+                    return [credentials, msg.from];// requestEventloop(credentials, msg.from)
+                })
+                .then(requestEventloop);
+        });
+
+        function requestEventloop(requestdata) {
+                var credentials = requestdata[0];
+                var from = requestdata[1];
+                mxService.events(credentials, from)
+                    .then(function (eventData) {
+                        eventhandlerService.parseEvents(eventData.chunk);
+                        return [credentials, eventData.end];
+                    })
+                    .then(requestEventloop);
+        }
+
     }]);
 });

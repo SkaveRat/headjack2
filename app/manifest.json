@@ -11,6 +11,7 @@
                 "node_modules/q/q.js",
                 "js/matrix.js",
                 "js/services/accountmanager-service.js",
+                "js/services/eventhandler-service.js",
                 "js/services/chrome-message-service.js",
                 "js/services/mx-service.js",
                 "js/background.js"
