@@ -1,0 +1,26 @@
+<md-content layout="column" layout-fill>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span>Matrix Headjack</span>
+            <span flex></span>
+            <md-button>
+                #
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-content flex>
+        <md-input-container>
+            <label>Username</label>
+            <input type="text" ng-model="loginform.user">
+        </md-input-container>
+        <md-input-container>
+            <label>Password</label>
+            <input type="password" ng-model="loginform.password">
+        </md-input-container>
+        <md-input-container>
+            <md-button class="md-raised md-primary" ng-click="checkLogin()">Save</md-button>
+        </md-input-container>
+    </md-content>
+    <md-toolbar>Footer</md-toolbar>
+</md-content>

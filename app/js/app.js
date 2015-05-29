@@ -1,4 +1,4 @@
-var headjackApp = angular.module('headjackApp', ['ngResource', 'chmsg', 'ngMaterial', 'ngAnimate', 'ngAria']);
+var headjackApp = angular.module('headjackApp', ['ngResource', 'chmsg', 'ngMaterial', 'ngAnimate', 'ngAria', 'ngRoute']);
 headjackApp.config(['$mdThemingProvider', function ($mdThemingProvider) {
     $mdThemingProvider.theme('default')
         .primaryPalette('blue-grey')

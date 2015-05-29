@@ -1,29 +1,3 @@
-<!DOCTYPE html>
-<html ng-app="headjackApp" ng-csp="">
-<head>
-    <meta charset="utf-8">
-    <title>Contactlist</title>
-
-    <link href="css/design.css" rel="stylesheet">
-    <link href="bower_components/angular-material/angular-material.min.css" rel="stylesheet">
-    <link href="bower_components/angularjs/angular-csp.css" rel="stylesheet">
-
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angularjs/angular.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-aria/angular-aria.js"></script>
-    <script src="bower_components/angular-material/angular-material.min.js"></script>
-    <script src="bower_components/angular-material-icons/angular-material-icons.js"></script>
-    <script src="js/matrix.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/services/chrome-message-service.js"></script>
-    <script src="js/services/mx-service.js"></script>
-    <script src="js/contactlist.js"></script>
-</head>
-<body ng-controller="ContactlistCtrl">
-
-
 <md-content layout="column" layout-fill>
     <md-toolbar>
         <div class="md-toolbar-tools">
@@ -35,7 +9,12 @@
         </div>
     </md-toolbar>
 
-    <md-content flex style="height: 1px">
+    <md-content flex ng-show="accountcheck.display">
+        <h2>No accounts</h2>
+        <p><a href="#/settings">Add account</a></p>
+    </md-content>
+
+    <md-content flex ng-show="!accountcheck.display">
         <md-list flex>
             <mx-contactlist-entry room="room" ng-repeat="room in rooms" ></mx-contactlist-entry>
         </md-list>
@@ -111,5 +90,3 @@
         <!--</div>-->
     <!--</div>-->
 <!--</div>-->
-</body>
-</html>

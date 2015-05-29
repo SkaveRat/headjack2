@@ -7,11 +7,6 @@ headjackApp.controller('ContactlistCtrl', function ($scope, chmsg) {
     };
     $scope.loginform = {disabled: false};
 
-    $scope.checkLogin = function () {
-        $scope.loginform.disabled = true;
-        chmsg.send('account.login', $scope.loginform);
-    };
-
     function getAccounts() {
         chmsg.send('account.getaccounts');
     }
@@ -30,10 +25,6 @@ headjackApp.controller('ContactlistCtrl', function ($scope, chmsg) {
         $scope.rooms = rooms;
         $scope.loading = false;
         $scope.$apply();
-    });
-
-    chmsg.on('contacts.refresh', function () {
-        getAccounts();
     });
 
     getAccounts();

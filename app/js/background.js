@@ -14,7 +14,7 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
     headjackApp.run(
         ['mxService', 'accountmanagerService', 'eventhandlerService', 'chmsg',
         function (mxService, accountmanagerService, eventhandlerService, chmsg) {
-        chrome.app.window.create('contactlist.html', {
+        chrome.app.window.create('index.html', {
             id: "Contactlist",
             innerBounds: {
                 width: 350,
