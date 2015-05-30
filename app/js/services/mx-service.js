@@ -53,9 +53,16 @@ angular.module('mxService', [])
                 return mxClient.eventStream(from);
             }
 
+            function sendMessage(credentials, data) {
+                console.log(data);
+                var mxClient = clientFromCredentials(credentials);
+                mxClient.sendTextMessage(data.room_id, data.msg);
+            }
+
             return {
                 login: login,
                 events: events,
+                sendMessage: sendMessage,
                 initialSync: initialSync,
                 getRoomInitSync: getRoomInitSync
             }

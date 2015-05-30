@@ -80,6 +80,13 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
                 });
         });
 
+        chmsg.on('message.send', function (data) {
+            accountmanagerService.getAccount(data.user_id)
+                .then(function (credentials) {
+                    mxService.sendMessage(credentials, data);
+                })
+        });
+
 
         chmsg.on('events.start', function (msg) {
             accountmanagerService.getAccount(msg.user_id)

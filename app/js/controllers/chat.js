@@ -17,17 +17,13 @@ headjackApp.controller('RoomCtrl', function ($scope, chmsg, $window) {
         });
     });
 
-
     $scope.sendMessage = function () {
-        console.log($scope.msg);
+        chmsg.send('message.send', {
+            user_id: user_id,
+            room_id: room_id,
+            msg: $scope.msg
+        });
+
+        $scope.msg = '';
     };
-
-    //
-    //$scope.sendMsg = function () {
-    //    chmsg.send('send_msg', {
-    //        msg: $scope.msg,
-    //        room_id: room_id
-    //    })
-    //}
-
 });
