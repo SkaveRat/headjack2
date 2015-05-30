@@ -1,10 +1,4 @@
-listen on events
-display new message from event
-send message
 show ghost-message
-scroll to bottom
-only scroll if already bottom
-display name
 display avatar
 show room users
 display room users state
