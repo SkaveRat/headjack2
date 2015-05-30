@@ -6,7 +6,8 @@ headjackApp.controller('SettingsCtrl', ['$scope', '$location', 'chmsg', function
     };
 
     chmsg.on('contacts.refresh', function () {
-        $location.path('/contacts');
+        $location.path('contacts');
+        $scope.$apply();
     });
 
 }]);
