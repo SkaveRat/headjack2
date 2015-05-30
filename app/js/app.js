@@ -1,1 +1,1 @@
-var app = angular.module('app', ['ngResource', 'chmsg', 'ngMaterial', 'ngAnimate', 'ngAria', 'ngRoute']);
+var app = angular.module('app', ['ngResource', 'chmsg', 'ngMaterial', 'ngAnimate', 'ngAria', 'ngRoute', 'luegg.directives']);

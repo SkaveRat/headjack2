@@ -24,6 +24,7 @@
     "bootstrap": "~3.3.4",
     "angular-material": "~0.9.4",
     "material-design-icons": "~1.0.2",
-    "angular-route": "~1.4.0"
+    "angular-route": "~1.4.0",
+    "angular-scroll-glue": "~2.0.5"
   }
 }

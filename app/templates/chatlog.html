@@ -1,4 +1,4 @@
-<md-content style="height:1px" flex>
+<md-content style="height:1px" flex scroll-glue>
     <md-list flex>
         <md-list-item room="room" ng-repeat-start="msg in (room | mx_room_messages)">
             <mx-avatar user_id="{{ msg.user_id }}"></mx-avatar>
