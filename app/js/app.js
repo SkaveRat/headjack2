@@ -26,8 +26,13 @@ headjackApp.filter('mx_room_alias', ['mx_room_membersFilter', function (mx_room_
         });
 
         var members = mx_room_membersFilter(room);
-        if(members.length <= 2)
-            alias = members.join(' ,'); //TODO use displayname and better concat
+        if(members.length <= 2) {
+            if(members[0] == room.me) { //remove own account
+                alias = members[1]
+            }else{
+                alias = members[0]
+            }
+        }
         return alias;
     }
 }]);
