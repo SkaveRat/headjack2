@@ -43,7 +43,10 @@
         <div flex layout="column">
             <md-content style="height:1px" flex>
                 <md-list flex>
-                    <md-list-item room="room" ng-repeat-start="msg in (room | mx_room_messages)">{{ msg.content.body }}</md-list-item>
+                    <md-list-item room="room" ng-repeat-start="msg in (room | mx_room_messages)">
+                        <mx-avatar user_id="{{ msg.user_id }}"></mx-avatar>
+                        <p>{{ msg.user_id }}: {{ msg.content.body }}</p>
+                    </md-list-item>
                     <md-divider ng-repeat-end></md-divider>
                 </md-list>
             </md-content>
