@@ -8,7 +8,15 @@ headjackApp.controller('RoomCtrl', function ($scope, chmsg, $window) {
     chmsg.on('room.data', function (roomdata) {
         $scope.room = roomdata;
         $scope.$apply();
+
+        chmsg.on('event.data', function (data) {
+            if (data.type == 'm.room.message' && data.room_id == room_id) {
+                $scope.room.messages.chunk.push(data);
+                $scope.$apply();
+            }
+        });
     });
+
 
     $scope.sendMessage = function () {
         console.log($scope.msg);
