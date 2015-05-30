@@ -1,4 +1,4 @@
-headjackApp.controller('RoomCtrl', function ($scope, chmsg, $window) {
+app.controller('RoomCtrl', function ($scope, chmsg, $window) {
 
     var room_id = $window.room_id;
     var user_id = $window.user_id;

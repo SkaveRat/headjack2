@@ -1,4 +1,4 @@
-headjackApp.config(['$routeProvider',
+app.config(['$routeProvider',
     function($routeProvider) {
         $routeProvider.
             when('/settings', {

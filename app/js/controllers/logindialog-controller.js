@@ -1,4 +1,4 @@
-headjackApp.controller('LoginDialogController',
+app.controller('LoginDialogController',
 ['$scope', 'chmsg', '$mdDialog', function ($scope, chmsg, $mdDialog) {
 
     console.log("foobar");

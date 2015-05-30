@@ -1,11 +1,11 @@
-var headjackApp = angular.module('headjackApp', ['ngResource', 'chmsg', 'ngMaterial', 'ngAnimate', 'ngAria', 'ngRoute']);
-headjackApp.config(['$mdThemingProvider', function ($mdThemingProvider) {
+var app = angular.module('app', ['ngResource', 'chmsg', 'ngMaterial', 'ngAnimate', 'ngAria', 'ngRoute']);
+app.config(['$mdThemingProvider', function ($mdThemingProvider) {
     $mdThemingProvider.theme('default')
         .primaryPalette('blue-grey')
         .accentPalette('lime')
 }]);
 
-headjackApp.filter('keylength', function(){
+app.filter('keylength', function(){
     return function(input){
         if(!angular.isObject(input)){
             throw Error("Usage of non-objects with keylength filter!!")
@@ -14,7 +14,7 @@ headjackApp.filter('keylength', function(){
     }
 });
 
-headjackApp.filter('mx_room_alias', ['mx_room_membersFilter', function (mx_room_membersFilter) {
+app.filter('mx_room_alias', ['mx_room_membersFilter', function (mx_room_membersFilter) {
     return function(room) {
         var alias = '';
         if(!room) { return ''; }
@@ -39,7 +39,7 @@ headjackApp.filter('mx_room_alias', ['mx_room_membersFilter', function (mx_room_
 
 //TODO use displaynames
 //TODO number not correct. Name changes? Leavings?
-headjackApp.filter('mx_room_members', function () {
+app.filter('mx_room_members', function () {
     return function (room) {
         var members = [];
         angular.forEach(room.state, function (state) {
@@ -51,7 +51,7 @@ headjackApp.filter('mx_room_members', function () {
     }
 });
 
-headjackApp.filter('mx_room_messages', function () {
+app.filter('mx_room_messages', function () {
     return function (room) {
         if(!room) { return []; }
         var messages = [];
@@ -64,7 +64,7 @@ headjackApp.filter('mx_room_messages', function () {
     }
 });
 
-headjackApp.directive('mxContactlistEntry', ['chmsg', function (chmsg) {
+app.directive('mxContactlistEntry', ['chmsg', function (chmsg) {
     return {
         templateUrl: "templates/contactlistItem.html",
         scope: {
@@ -79,7 +79,7 @@ headjackApp.directive('mxContactlistEntry', ['chmsg', function (chmsg) {
     }
 }]);
 
-headjackApp.directive('mxAvatar', ['chmsg', function (chmsg) {
+app.directive('mxAvatar', ['chmsg', function (chmsg) {
     return {
         template: '<img src="{{ avatar_url }}" class="md-avatar" alt="Avatar of {{ user_id }}" />',
         scope: {

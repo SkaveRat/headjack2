@@ -1,6 +1,6 @@
 chrome.app.runtime.onLaunched.addListener(function (launchData) {
 
-    var headjackApp = angular.module('headjackApp', [
+    var app = angular.module('app', [
         'mxService',
         'accountmanagerService',
         'eventhandlerService',
@@ -8,10 +8,10 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
     ]);
 
     angular.element(document).ready(function () {
-        angular.bootstrap(document, ['headjackApp']);
+        angular.bootstrap(document, ['app']);
     });
 
-    headjackApp.run(
+    app.run(
         ['mxService', 'accountmanagerService', 'eventhandlerService', 'chmsg',
         function (mxService, accountmanagerService, eventhandlerService, chmsg) {
         chrome.app.window.create('index.html', {

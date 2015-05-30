@@ -1,4 +1,4 @@
-headjackApp.controller('ContactlistCtrl', ['$scope', 'chmsg',function ($scope, chmsg) {
+app.controller('ContactlistCtrl', ['$scope', 'chmsg',function ($scope, chmsg) {
 
     $scope.loading = true;
 

@@ -1,4 +1,4 @@
-headjackApp.controller('SettingsCtrl', ['$scope', '$location', 'chmsg', function ($scope, $location, chmsg) {
+app.controller('SettingsCtrl', ['$scope', '$location', 'chmsg', function ($scope, $location, chmsg) {
 
     $scope.checkLogin = function () {
         $scope.loginform.disabled = true;
