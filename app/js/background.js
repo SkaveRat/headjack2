@@ -53,7 +53,7 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
         });
 
         chmsg.on('room.open', function (msg) {
-            chrome.app.window.create('room.html', {
+            chrome.app.window.create('chat.html', {
                 id: msg.room_id,
                 innerBounds: {
                     width: 800,
