@@ -1,4 +1,4 @@
-headjackApp.controller('ContactlistCtrl', function ($scope, chmsg) {
+headjackApp.controller('ContactlistCtrl', ['$scope', 'chmsg',function ($scope, chmsg) {
 
     $scope.loading = true;
 
@@ -28,4 +28,4 @@ headjackApp.controller('ContactlistCtrl', function ($scope, chmsg) {
     });
 
     getAccounts();
-});
+}]);
