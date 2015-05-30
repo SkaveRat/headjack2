@@ -1,3 +1,17 @@
+app.directive('mxChatlog', [function() {
+    return {
+        templateUrl: 'templates/chatlog.html',
+        scope: {
+            room: '='
+        },
+        restrict: 'E',
+        replace: true,
+        link: function(scope, element, attr) {
+            console.log(attr.room);
+        }
+    }
+}]);
+
 app.directive('mxContactlistEntry', ['chmsg', function (chmsg) {
     return {
         templateUrl: "templates/contactlistItem.html",
