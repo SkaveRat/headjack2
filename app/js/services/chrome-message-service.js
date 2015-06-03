@@ -16,8 +16,6 @@ angular.module('chmsg', [])
 
             function on(type, callback) {
                 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-                    console.debug("Chrome message");
-                    console.debug(message);
                     if (message.type == type) {
                         callback(message.message, sendResponse)
                     }

@@ -9,8 +9,12 @@ angular.module('eventhandlerService', [])
                 chmsg.send('event.data', event);
             }
 
-            function parseEvents(eventChunks) {
-                angular.forEach(eventChunks, parseEvent);
+            function parseEvents(err, events) {
+                if(err) {
+                    console.error(err)
+                }else{
+                    angular.forEach(events, parseEvent);
+                }
             }
 
             return {

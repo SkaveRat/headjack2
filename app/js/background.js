@@ -32,12 +32,15 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
                 });
         });
 
-        chmsg.on('events.initsync', function (user_id) {
+        chmsg.on('account.startclient', function (user_id) {
             accountmanagerService.getAccount(user_id)
-                .then(mxService.initialSync)
-                .then(function (syncData) {
-                    chmsg.send('rooms.list', syncData.rooms);
-                    chmsg.send('events.start', {user_id: user_id, from: syncData.end});
+                .then(function (credentials) {
+                    mxService.startClient(credentials, eventhandlerService.parseEvents);
+                    return credentials;
+                })
+                .then(function (credentials) {
+                    console.log(credentials);
+
                 });
         });
 
@@ -88,24 +91,24 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
         });
 
 
-        chmsg.on('events.start', function (msg) {
-            accountmanagerService.getAccount(msg.user_id)
-                .then(function (credentials) {
-                    return [credentials, msg.from];// requestEventloop(credentials, msg.from)
-                })
-                .then(requestEventloop);
-        });
-
-        function requestEventloop(requestdata) {
-                var credentials = requestdata[0];
-                var from = requestdata[1];
-                mxService.events(credentials, from)
-                    .then(function (eventData) {
-                        eventhandlerService.parseEvents(eventData.chunk);
-                        return [credentials, eventData.end];
-                    })
-                    .then(requestEventloop);
-        }
+        //chmsg.on('events.start', function (msg) {
+        //    accountmanagerService.getAccount(msg.user_id)
+        //        .then(function (credentials) {
+        //            return [credentials, msg.from];// requestEventloop(credentials, msg.from)
+        //        })
+        //        .then(requestEventloop);
+        //});
+        //
+        //function requestEventloop(requestdata) {
+        //        var credentials = requestdata[0];
+        //        var from = requestdata[1];
+        //        mxService.events(credentials, from)
+        //            .then(function (eventData) {
+        //                eventhandlerService.parseEvents(eventData.chunk);
+        //                return [credentials, eventData.end];
+        //            })
+        //            .then(requestEventloop);
+        //}
 
     }]);
 });

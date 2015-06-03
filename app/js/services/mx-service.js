@@ -8,22 +8,17 @@ angular.module('mxService', [])
 
             //TODO abstract for multiple accounts
             var mxSdk = $window.matrixcs;
-            mxSdk.request($.ajax);
             var mxClient = mxSdk.createClient("https://matrix.org"); //TODO custom homeserver
 
             function login(logindata) {
                 return mxClient.login('m.login.password', logindata);
             }
 
-            function initialSync(credentials) {
+            function startClient(credentials, callback) {
                 var mxClient = clientFromCredentials(credentials);
-                return mxClient.initialSync(1)
-                    .then(function (syncData) {
-                        angular.forEach(syncData.rooms, function (room) { //TODO find a better solution to later stateless identify own account
-                            room.me = credentials.user_id;
-                        });
-                        return syncData;
-                    });
+                mxClient.startClient(function (err, events) {
+                    callback(err, events)
+                });
             }
 
             function getRoomInitSync(credentials, room_id) {
@@ -41,10 +36,12 @@ angular.module('mxService', [])
              */
             function clientFromCredentials(credentials) {
                 return mxSdk.createClient({
-                    "baseUrl":     "https://matrix.org",
+                    "baseUrl": "https://matrix.org",
                     "accessToken": credentials.access_token,
                     "home_server": credentials.home_server,
-                    "userId":      credentials.user_id
+                    "userId": credentials.user_id
+                }, {
+                    noUserAgent: true
                 });
             }
 
@@ -59,12 +56,22 @@ angular.module('mxService', [])
                 mxClient.sendTextMessage(data.room_id, data.msg);
             }
 
+            /**
+             * @param event
+             * @returns {mxService.MatrixEvent}
+             * @private
+             */
+            function _MatrixEvent(event) {
+                return new mxSdk.MatrixEvent(event.event);
+            }
+
             return {
                 login: login,
                 events: events,
                 sendMessage: sendMessage,
-                initialSync: initialSync,
-                getRoomInitSync: getRoomInitSync
+                startClient: startClient,
+                getRoomInitSync: getRoomInitSync,
+                MatrixEvent: _MatrixEvent
             }
         }
     ]
