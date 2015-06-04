@@ -7,7 +7,7 @@ angular.module('mxSessionService', [])
 
             var mxSdk = $window.matrixcs;
 
-            var Session = function (credentials) {
+            var MatrixSession = function (credentials) {
                 var _this = this;
                 _this.credentials = credentials;
                 _this._events = [];
@@ -23,7 +23,7 @@ angular.module('mxSessionService', [])
                 _this.client.startClient(_this.listenForEvents.bind(_this));
             };
 
-            Session.prototype = {
+            MatrixSession.prototype = {
                 _processEvent: function (event) {
                     var _this = this;
                     _this._events.push(event);
@@ -51,7 +51,7 @@ angular.module('mxSessionService', [])
             }
 
             function createSession(account) {
-                sessions.push(new Session(account));
+                sessions.push(new MatrixSession(account));
             }
 
             return {
