@@ -1,4 +1,28 @@
-app.controller('ContactlistCtrl', ['$scope', 'chmsg', 'mxService', function ($scope, chmsg, mxService) {
+app.controller('ContactlistCtrl', ['$scope', 'chmsg', function ($scope, chmsg) {
+
+    $scope.rooms = [];
+
+    chmsg.send('contactlist.loaded');
+
+    chmsg.on('room.listing', function (data) {
+        $scope.rooms.push({
+            room_id: data.room_id,
+            user_id: data.user_id
+        });
+        $scope.$apply();
+    });
+
+
+    chmsg.on('room.alias', function (data) {
+        $scope.rooms.forEach(function (foo) {
+            if(foo.room_id == data.room_id) {
+                foo.alias = data.alias;
+                $scope.$apply();
+            }
+        });
+    });
+
+
 
     //$scope.loading = true;
     //

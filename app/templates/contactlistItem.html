@@ -1,7 +1,7 @@
 <md-list-item md-ink-ripple class="md-2-line" ng-click="openRoom(room.room_id, room.me)">
     <md-icon md-svg-icon="bower_components/material-design-icons/social/svg/production/ic_group_48px.svg"></md-icon>
     <div class="md-list-item-text">
-        <h3>{{room | mx_room_alias}}</h3>
+        <h3>{{ room.alias || room.room_id }}</h3>
         <p>Foobar</p>
     </div>
 </md-list-item>

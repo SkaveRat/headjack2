@@ -3,6 +3,7 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
     var app = angular.module('app', [
         'mxService',
         'mxSessionService',
+        'mxRoomService',
         'accountmanagerService',
         'eventhandlerService',
         'chmsg'
@@ -25,12 +26,13 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
                 }
             });
 
-            accountmanagerService.getAccounts()
-                .then(mxSessionService.startSessions)
-                .then(function (sess) {
-                    //console.log(sess[0].getUserId());
-                });
-
+            chmsg.on('contactlist.loaded', function () {
+                accountmanagerService.getAccounts()
+                    .then(mxSessionService.startSessions)
+                    .then(function (sess) {
+                        //console.log(sess[0].getUserId());
+                    });
+            });
 
         //chmsg.on('account.getaccounts', function () {
         //    accountmanagerService.getAccounts()

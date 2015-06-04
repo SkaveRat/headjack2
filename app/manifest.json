@@ -15,6 +15,7 @@
         "js/services/chrome-message-service.js",
         "js/services/mx-service.js",
         "js/services/mxsession-service.js",
+        "js/services/mxroom-service.js",
         "js/background.js"
       ]
     }

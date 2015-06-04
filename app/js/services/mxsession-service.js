@@ -2,8 +2,8 @@
 
 angular.module('mxSessionService', [])
     .factory('mxSessionService', [
-        '$window', 'chmsg',
-        function ($window, chmsg) {
+        '$window', 'chmsg', 'mxRoomService',
+        function ($window, chmsg, mxRoomService) {
 
             var mxSdk = $window.matrixcs;
 
@@ -19,29 +19,39 @@ angular.module('mxSessionService', [])
                 }, {
                     noUserAgent: true
                 });
+                _this._roomManager = mxRoomService.createManager(_this._onRoomManagerEvent.bind(_this));
                 _this.user_id = credentials.user_id;
-                _this.client.startClient(_this.listenForEvents.bind(_this));
+                _this.client.startClient(_this._listenForEvents.bind(_this));
             };
 
             MatrixSession.prototype = {
                 _processEvent: function (event) {
                     var _this = this;
                     _this._events.push(event);
-
-                    if (event.getType() == 'm.room.member') {
-                        //TODO fill member lists
-                    }
+                    _this._roomManager.processEvent(event);
                 },
-                listenForEvents: function (err, events) {
+                _listenForEvents: function (err, events) {
                     var _this = this;
                     angular.forEach(events, _this._processEvent.bind(_this));
                 },
-
-                getUserId: function () {
-                    return this.user_id;
+                _onRoomManagerEvent: function(eventname, data) {
+                    switch (eventname) {
+                        case 'room.listing':
+                            chmsg.send('room.listing', {
+                                room_id: data,
+                                user_id: this.user_id
+                            });
+                            break;
+                        case 'room.alias':
+                            chmsg.send('room.alias', {
+                                user_id: this.user_id,
+                                room_id: data.room_id,
+                                alias: data.alias
+                            });
+                            break;
+                    }
                 }
             };
-
 
             var sessions = [];
 
