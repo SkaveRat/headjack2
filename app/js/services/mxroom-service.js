@@ -52,6 +52,14 @@ angular.module('mxRoomService', [])
             };
 
             MatrixRoomManager.prototype = {
+
+                getRooms: function () {
+                    var _this = this;
+                    this.rooms.forEach(function (room) {
+                        _this._eventCallback('room.listing', room);
+                    });
+                },
+
                 getRoomById: function (room_id) {
                     var room_list = this.rooms.filter(function (room) {
                         return room.getId() == room_id;
@@ -60,7 +68,6 @@ angular.module('mxRoomService', [])
                 },
 
                 createRoom: function (room_id) {
-                    this._eventCallback('room.listing', room_id);
                     var room = new MatrixRoom(room_id);
                     this.rooms.push(room);
                     return room;
@@ -81,7 +88,6 @@ angular.module('mxRoomService', [])
                             });
                             break;
                     }
-
                 }
             };
 

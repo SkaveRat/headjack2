@@ -5,13 +5,13 @@ app.controller('ContactlistCtrl', ['$scope', 'chmsg', function ($scope, chmsg) {
     chmsg.send('contactlist.loaded');
 
     chmsg.on('room.listing', function (data) {
-        $scope.rooms.push({
-            room_id: data.room_id,
-            user_id: data.user_id
-        });
+        $scope.rooms.push(data.room);
         $scope.$apply();
     });
 
+    chmsg.on('events.initsync_done', function () { //TODO add account in request
+        chmsg.send('room.listing.get');
+    });
 
     chmsg.on('room.alias', function (data) {
         $scope.rooms.forEach(function (foo) {
