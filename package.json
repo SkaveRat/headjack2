@@ -1,0 +1,22 @@
+{
+  "name": "MatrixHeadjack",
+  "version": "0.0.0",
+  "description": "Matrix.org Desktop app",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-browserify": "^0.5.0",
+    "gulp-concat": "^2.2.0",
+    "react": "^0.12.2",
+    "reactify": "^0.13.1",
+    "es6-promise": "^1.0.0",
+    "flux": "^2.0.1",
+    "object-assign": "^1.0.0"
+  },
+  "scripts": {
+    "compile": "node_modules/gulp/bin/gulp.js",
+    "watch": "node_modules/gulp/bin/gulp.js watch"
+  },
+  "author": "SkaveRat",
+  "license": "Apache Licence 2.0"
+}
