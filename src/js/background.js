@@ -9,6 +9,11 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
             top: 0
         }
     });
+
+    chrome.runtime.onMessage.addListener(function (message) {
+        console.log(message);
+        console.log("got it");
+    });
 });
     //var app = angular.module('app', [
     //    'mxService',

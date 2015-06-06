@@ -12,6 +12,7 @@
     "react": "latest",
     "react-tap-event-plugin": "latest",
     "reactify": "latest",
+    "react-flexbox": "latest",
     "es6-promise": "latest",
     "flux": "latest",
     "object-assign": "latest"
