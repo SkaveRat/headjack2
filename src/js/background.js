@@ -1,38 +1,48 @@
 chrome.app.runtime.onLaunched.addListener(function (launchData) {
 
-    var app = angular.module('app', [
-        'mxService',
-        'mxSessionService',
-        'mxRoomService',
-        'accountmanagerService',
-        'eventhandlerService',
-        'chmsg'
-    ]);
-
-    angular.element(document).ready(function () {
-        angular.bootstrap(document, ['app']);
+    chrome.app.window.create('index.html', {
+        id: "Contactlist",
+        innerBounds: {
+            width: 350,
+            height: 600,
+            left: 0,
+            top: 0
+        }
     });
-
-    app.run(
-        ['mxService', 'accountmanagerService', 'mxSessionService', 'eventhandlerService', 'chmsg',
-        function (mxService, accountmanagerService, mxSessionService, eventhandlerService, chmsg) {
-            chrome.app.window.create('index.html', {
-                id: "Contactlist",
-                innerBounds: {
-                    width: 350,
-                    height: 600,
-                    left: 0,
-                    top: 0
-                }
-            });
-
-            chmsg.on('contactlist.loaded', function () {
-                accountmanagerService.getAccounts()
-                    .then(mxSessionService.startSessions)
-                    .then(function (sess) {
-                        //console.log(sess[0].getUserId());
-                    });
-            });
+});
+    //var app = angular.module('app', [
+    //    'mxService',
+    //    'mxSessionService',
+    //    'mxRoomService',
+    //    'accountmanagerService',
+    //    'eventhandlerService',
+    //    'chmsg'
+    //]);
+    //
+    //angular.element(document).ready(function () {
+    //    angular.bootstrap(document, ['app']);
+    //});
+    //
+    //app.run(
+    //    ['mxService', 'accountmanagerService', 'mxSessionService', 'eventhandlerService', 'chmsg',
+    //    function (mxService, accountmanagerService, mxSessionService, eventhandlerService, chmsg) {
+    //        chrome.app.window.create('index.html', {
+    //            id: "Contactlist",
+    //            innerBounds: {
+    //                width: 350,
+    //                height: 600,
+    //                left: 0,
+    //                top: 0
+    //            }
+    //        });
+    //
+    //        chmsg.on('contactlist.loaded', function () {
+    //            accountmanagerService.getAccounts()
+    //                .then(mxSessionService.startSessions)
+    //                .then(function (sess) {
+    //                    //console.log(sess[0].getUserId());
+    //                });
+    //        });
 
         //chmsg.on('account.getaccounts', function () {
         //    accountmanagerService.getAccounts()
@@ -120,5 +130,4 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
         //            .then(requestEventloop);
         //}
 
-    }]);
-});
+    //}]);
