@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "description": "Matrix.org Desktop app",
   "dependencies": {
-    "material-ui": "~0.8.0"
+    "material-ui": "~0.8.0",
+    "matrix-js-sdk": "git+https://github.com/matrix-org/matrix-js-sdk",
+    "rsvp": "~3.0.18"
   },
   "devDependencies": {
     "gulp": "latest",
