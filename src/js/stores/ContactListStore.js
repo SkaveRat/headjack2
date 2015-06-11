@@ -23,6 +23,8 @@ var ContactListStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function (payload) {
     var action = payload.action;
 
+    console.log(payload);
+
     switch (action.actionType) {
         case ContactListConstants.FETCH_CONTACTS:
             MatrixActions.fetchContactlist();

@@ -1,5 +1,6 @@
 var   AccountManagerService = require('./services/AccountManagerService')
     , MxSessionService = require('./services/MxSessionService')
+    , ChromeMessageService = require('./services/ChromeMessageService')
     ;
 
 chrome.app.runtime.onLaunched.addListener(function (launchData) {
@@ -14,10 +15,12 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
         }
     });
 
-    chrome.runtime.onMessage.addListener(function (message) {
+    ChromeMessageService.on('contactlist.load', function (message) {
         AccountManagerService.getAccounts()
-        .then(function (credentials) {
+            .then(function (credentials) {
                 MxSessionService.startSessions(credentials);
             });
     });
+
+    chrome.runtime.onMessage.addListener();
 });

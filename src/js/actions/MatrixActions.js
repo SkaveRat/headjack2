@@ -1,8 +1,9 @@
-
+var ChromeMessageService = require('../services/ChromeMessageService')
+    ;
 
 var MatrixActions = {
     fetchContactlist: function () {
-        chrome.runtime.sendMessage('foobar');
+        ChromeMessageService.send('contactlist.load');
     }
 };
 
