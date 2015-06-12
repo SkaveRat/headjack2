@@ -14,19 +14,18 @@ var ContactList = React.createClass({
     },
 
     componentDidMount: function () {
+        ContactListStore.addChangeListener(this._onChange);
         ContactListActions.fetchContactlist();
     },
 
     render: function () {
-
-        //var foo = [
-        //{ payload: '1', text: 'ID', data: '1234567890', icon: 'home' },
-        //];
-        var contactlist = this.state.rooms.map(function (entry) {
-            return entry;
+        var contactlist = this.state.rooms.map(function (room, i) {
+            return {
+                payload: i,
+                text: room.name,
+                icon: 'home'
+            };
         });
-
-        console.log(contactlist);
 
         return (
             <Menu autoWidth={false} menuItems={contactlist} onItemClick={this.handleClick} />
@@ -34,7 +33,6 @@ var ContactList = React.createClass({
     },
 
     handleClick: function () {
-        console.log("clicked");
         ContactListActions.fetchContactlist();
     },
 

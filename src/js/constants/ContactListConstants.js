@@ -1,6 +1,6 @@
 var ContactListConstants = {
       FETCH_CONTACTS: 'FETCH_CONTACTS'
-    , CONTACTS: 'CONTACTS'
+    , ROOM_LIST: 'ROOM_LIST'
 };
 
 module.exports = ContactListConstants;

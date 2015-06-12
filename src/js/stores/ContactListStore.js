@@ -6,14 +6,20 @@ var assign = require('object-assign')
     , MatrixActions = require('../actions/MatrixActions')
     ;
 
+var CHANGE_EVENT = 'change';
+
 var contactListState = {
     rooms: []
 };
 
 
 var ContactListStore = assign({}, EventEmitter.prototype, {
+    addChangeListener: function(callback) {
+        this.on(CHANGE_EVENT, callback);
+    },
+
     emitChange: function () {
-        this.emit('change');
+        this.emit(CHANGE_EVENT);
     },
 
     getState: function () {
@@ -26,10 +32,10 @@ AppDispatcher.register(function (payload) {
 
     switch (action.actionType) {
 
-        case MatrixTypeConstants.M_ROOM_MEMBER:
-            console.log(payload.event);
+        case ContactListConstants.ROOM_LIST:
+            contactListState.rooms = payload.data;
+            ContactListStore.emitChange();
             break;
-
         case ContactListConstants.FETCH_CONTACTS:
             MatrixActions.fetchContactlist();
             break;

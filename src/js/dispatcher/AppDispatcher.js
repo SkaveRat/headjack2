@@ -3,16 +3,6 @@ var Dispatcher = require('flux').Dispatcher
     ;
 
 
-var AppDispatcher = assign(new Dispatcher(), {
-    dispatchEvent: function (data) {
-        var event = data.event;
-        this.dispatch({
-            action: {
-                actionType: event.type || 'm.unknown'
-            },
-            event: event
-        });
-    }
-});
+var AppDispatcher = assign(new Dispatcher(), {});
 
 module.exports = AppDispatcher;

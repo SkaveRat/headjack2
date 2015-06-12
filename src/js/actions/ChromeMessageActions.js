@@ -6,11 +6,12 @@ var AppDispatcher = require('../dispatcher/AppDispatcher.js')
 
 var ChromeMessageActions = {
     load: function () {
-
-        ChromeMessageService.on('event', function(event) {
-            AppDispatcher.dispatchEvent(event);
+        ChromeMessageService.on('rooms.list', function(rooms) {
+            AppDispatcher.dispatch({
+                action: {actionType: ContactListConstants.ROOM_LIST},
+                data: rooms
+            });
         });
-
     }
 };
 
