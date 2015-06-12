@@ -2,11 +2,12 @@ var assign = require('object-assign')
     , EventEmitter = require('events').EventEmitter
     , AppDispatcher = require('../dispatcher/AppDispatcher.js')
     , ContactListConstants = require('../constants/ContactListConstants')
+    , MatrixTypeConstants = require('../constants/MatrixTypeConstants')
     , MatrixActions = require('../actions/MatrixActions')
     ;
 
 var contactListState = {
-    contacts: []
+    rooms: []
 };
 
 
@@ -23,22 +24,18 @@ var ContactListStore = assign({}, EventEmitter.prototype, {
 AppDispatcher.register(function (payload) {
     var action = payload.action;
 
-    console.log(payload);
-
     switch (action.actionType) {
-        case ContactListConstants.FETCH_CONTACTS:
-            MatrixActions.fetchContactlist();
+
+        case MatrixTypeConstants.M_ROOM_MEMBER:
+            console.log(payload.event);
             break;
 
-        case ContactListConstants.CONTACTS:
-            contactListState.contacts = payload.contacts;
-            ContactListStore.emitChange();
-            console.log(contactListState);
+        case ContactListConstants.FETCH_CONTACTS:
+            MatrixActions.fetchContactlist();
             break;
     }
 
     return true;
 });
-
 
 module.exports = ContactListStore;

@@ -2,8 +2,8 @@
 var React = require('react');
 var Index = require('./components/index.js');
 
-var injectTapEventPlugin = require("react-tap-event-plugin");
-injectTapEventPlugin();
+//var injectTapEventPlugin = require("react-tap-event-plugin");
+//injectTapEventPlugin();
 
 
 React.render(

@@ -1,4 +1,5 @@
 var mxSdk = require('matrix-js-sdk')
+    , ChromeMessageService = require('../services/ChromeMessageService')
     ;
 
 
@@ -16,20 +17,16 @@ var MatrixSession = function (credentials) {
     });
 
     this.user_id = credentials.user_id;
-    this.initsyncDone = false;
     this.client.startClient(this._listenForEvents.bind(this));
 };
 
 MatrixSession.prototype = {
-    _processEvent: function (event) {
-        this._events.push(event);
-    },
     _listenForEvents: function (err, events) {
-        if(!this.initsyncDone) {
-            //chmsg.send('events.initsync_done');
-            this.initsyncDone = true;
-        }
-        events.forEach(this._processEvent.bind(this));
+        var _this = this;
+        events.forEach(function (event) {
+            _this._events.push(event);
+            ChromeMessageService.send('event', event);
+        });
     }
 };
 

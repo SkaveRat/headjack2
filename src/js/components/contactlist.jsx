@@ -22,7 +22,7 @@ var ContactList = React.createClass({
         //var foo = [
         //{ payload: '1', text: 'ID', data: '1234567890', icon: 'home' },
         //];
-        var contactlist = this.state.contacts.map(function (entry) {
+        var contactlist = this.state.rooms.map(function (entry) {
             return entry;
         });
 

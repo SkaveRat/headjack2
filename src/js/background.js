@@ -21,6 +21,4 @@ chrome.app.runtime.onLaunched.addListener(function (launchData) {
                 MxSessionService.startSessions(credentials);
             });
     });
-
-    chrome.runtime.onMessage.addListener();
 });

@@ -3,13 +3,16 @@ var Dispatcher = require('flux').Dispatcher
     ;
 
 
-//var AppDispatcher = assign(new Dispatcher(), {
-//    handleViewAction: function (action) {
-//        this.dispatch({
-//            source: 'VIEW_ACTION',
-//            action: action
-//        });
-//    }
-//});
+var AppDispatcher = assign(new Dispatcher(), {
+    dispatchEvent: function (data) {
+        var event = data.event;
+        this.dispatch({
+            action: {
+                actionType: event.type || 'm.unknown'
+            },
+            event: event
+        });
+    }
+});
 
-module.exports = new Dispatcher();
+module.exports = AppDispatcher;

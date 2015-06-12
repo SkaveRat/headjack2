@@ -8,12 +8,15 @@ var React = require('react')
     , Menu = mui.Menu
     , AppBar = mui.AppBar
     , ContactList = require('./contactlist.jsx')
+    , ChromeMessageActions = require('../actions/ChromeMessageActions');
     ;
     //
 //var AppActions = require('../actions/AppActions');
 //var AppStore = require('../stores/AppStore');
 
+ChromeMessageActions.load();
 injectTapEventPlugin();
+
 var Index = React.createClass({
     getChildContext: function() {
         return {
