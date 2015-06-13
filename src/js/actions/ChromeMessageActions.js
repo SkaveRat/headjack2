@@ -5,14 +5,19 @@ var AppDispatcher = require('../dispatcher/AppDispatcher.js')
 
 
 var ChromeMessageActions = {
-    load: function () {
+    initializeListeners: function () {
         ChromeMessageService.on('rooms.list', function(rooms) {
             AppDispatcher.dispatch({
                 action: {actionType: ContactListConstants.ROOM_LIST},
                 data: rooms
             });
         });
+    },
+    
+    openRoom: function (room_id) {
+        ChromeMessageService.send('room.open', room_id);
     }
+    
 };
 
 module.exports = ChromeMessageActions;

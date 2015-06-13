@@ -8,13 +8,11 @@ var React = require('react')
     , Menu = mui.Menu
     , AppBar = mui.AppBar
     , ContactList = require('./contactlist.jsx')
-    , ChromeMessageActions = require('../actions/ChromeMessageActions');
+    , ChromeMessageActions = require('../actions/ChromeMessageActions')
     ;
     //
-//var AppActions = require('../actions/AppActions');
-//var AppStore = require('../stores/AppStore');
 
-ChromeMessageActions.load();
+ChromeMessageActions.initializeListeners();
 injectTapEventPlugin();
 
 var Index = React.createClass({
@@ -22,17 +20,6 @@ var Index = React.createClass({
         return {
             muiTheme: ThemeManager.getCurrentTheme()
         };
-    },
-    //componentDidMount: function() {
-    //    EntityStore.addChangeListener(this._onChange);
-    //    this.getEntityDataIfNeeded(this.props);
-    //},
-    //componentWillUnmount: function() {
-    //    EntityStore.removeChangeListener(this._onChange);
-    //},
-    handleClick: function(){
-        //AppActions.addItem('this is the item');
-        console.log("foobar");
     },
     render: function(){
         return (

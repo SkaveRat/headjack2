@@ -2,8 +2,9 @@
 
     var React = require('react')
     , mui = require('material-ui')
-    , Menu = mui.Menu
+    , FlatButton = mui.FlatButton
     , ContactListActions = require('../actions/ContactListActions')
+    , ChromeMessageActions = require('../actions/ChromeMessageActions')
     , ContactListStore = require('../stores/ContactListStore')
     ;
 
@@ -19,21 +20,22 @@ var ContactList = React.createClass({
     },
 
     render: function () {
-        var contactlist = this.state.rooms.map(function (room, i) {
-            return {
-                payload: i,
-                text: room.name,
-                icon: 'home'
-            };
-        });
+        var liststyles = {
+            display: "block",
+            width: "100%"
+        };
 
         return (
-            <Menu autoWidth={false} menuItems={contactlist} onItemClick={this.handleClick} />
+            <div>
+            {this.state.rooms.map(function (room) {
+                return <FlatButton onClick={this.handleClick.bind(null, room.roomId)} style={liststyles} label={room.name} />
+                }, this)}
+            </div>
         );
     },
 
-    handleClick: function () {
-        ContactListActions.fetchContactlist();
+    handleClick: function (room_id) {
+        ChromeMessageActions.openRoom(room_id);
     },
 
     _onChange: function() {
