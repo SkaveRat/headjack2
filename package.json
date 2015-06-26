@@ -4,7 +4,7 @@
   "description": "Matrix.org Desktop app",
   "dependencies": {
     "material-ui": "0.9.2",
-    "matrix-js-sdk": "0.1.0",
+    "matrix-js-sdk": "0.1.1",
     "rsvp": "~3.0.18"
   },
   "devDependencies": {
