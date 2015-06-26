@@ -2,7 +2,8 @@
 
     var React = require('react')
     , mui = require('material-ui')
-    , FlatButton = mui.FlatButton
+    , List = mui.List
+    , ListItem = mui.ListItem
     , ContactListActions = require('../actions/ContactListActions')
     , ChromeMessageActions = require('../actions/ChromeMessageActions')
     , ContactListStore = require('../stores/ContactListStore')
@@ -26,11 +27,11 @@ var ContactList = React.createClass({
         };
 
         return (
-            <div>
+            <List>
             {this.state.rooms.map(function (room) {
-                return <FlatButton onClick={this.handleClick.bind(null, room.roomId)} style={liststyles} label={room.name} />
+                return <ListItem onClick={this.handleClick.bind(null, room.roomId)} >{room.name}</ListItem>
                 }, this)}
-            </div>
+            </List>
         );
     },
 
